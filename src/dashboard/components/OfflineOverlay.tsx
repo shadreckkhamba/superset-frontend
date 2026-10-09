@@ -346,8 +346,8 @@ const OfflineOverlay: React.FC = () => {
             errorState.type === 'maintenance'
               ? '<div class="submessage">Please check back later or contact support</div>'
               : errorState.type === 'loading'
-              ? '<div class="submessage">This may take a moment...</div>'
-              : '<div class="submessage">Attempting to reconnect...</div>'
+              ? ''
+              : ''
           }
         </div>
       </div>
