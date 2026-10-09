@@ -194,7 +194,18 @@ const OfflineOverlay: React.FC = () => {
       if (!reloadingRef.current) {
         reloadingRef.current = true;
         reloadTimerRef.current = setTimeout(() => {
-          window.location.reload();
+          // Check if we're in slideshow or standalone mode
+          const query = new URLSearchParams(window.location.search);
+          const isSlideshow = query.get(SLIDESHOW_PARAM) === '1';
+          const isStandalone = query.get(STANDALONE_PARAM) === '1';
+          
+          // Don't reload if in slideshow or standalone mode - just let it continue
+          // In slideshow mode, the parent slideshow component manages the iframes
+          // In standalone mode (fullscreen), reloading would exit fullscreen
+          // In both cases, just hiding the overlay is sufficient
+          if (!isSlideshow && !isStandalone) {
+            window.location.reload();
+          }
         }, RECONNECT_DELAY_MS);
       }
     };
